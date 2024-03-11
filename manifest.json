@@ -21,7 +21,7 @@
     },
     "action": {
       "default_title": "Configure Github",
-      "default_popup": "popup.html"
+      "default_popup": "web/popup.html"
     }
 }
   

@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="flex flex-col w-full border-opacity-50">
-  <div class="flex flex-col justify-center card bg-base-300 rounded-box p-2 my-4 mx-2">
+  <div class="flex flex-col justify-center card bg-base-300 rounded-box p-2 mb-6 mx-2">
     <div class="flex justify-between items-center px-2">
     <p>viktorb1/leetcode</p>
     <button class="btn btn-square rounded-xl btn-success bg-leetcode-orange hover:bg-leetcode-orange border-none">
@@ -43,7 +43,12 @@
     </div>
   </div>
 </div>
-      <button class="btn btn-info">Link new repository</button>
+<a href="connect.html" target="_blank">
+  <button class="btn btn-info">
+          Link new repository
+  </button>
+</a>
+
     </div>
   </main>
 </template>

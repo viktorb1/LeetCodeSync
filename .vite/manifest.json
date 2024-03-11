@@ -1,0 +1,47 @@
+{
+  "../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-DA9Km_C2.js",
+    "src": "../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_global-!~{005}~.js": {
+    "file": "global.css",
+    "src": "_global-!~{005}~.js"
+  },
+  "_global-CauCmdQp.js": {
+    "file": "assets/global-CauCmdQp.js",
+    "css": [
+      "global.css"
+    ]
+  },
+  "content-script.ts-loader.js": {
+    "file": "content-script.ts-loader.js",
+    "src": "content-script.ts-loader.js"
+  },
+  "src/scripts/background-script.ts": {
+    "file": "assets/background-script.ts-l0sNRNKZ.js",
+    "src": "src/scripts/background-script.ts",
+    "isEntry": true
+  },
+  "src/scripts/content-script.ts": {
+    "file": "assets/content-script.ts-l0sNRNKZ.js",
+    "src": "src/scripts/content-script.ts",
+    "isEntry": true
+  },
+  "websites/connect.html": {
+    "file": "assets/connect-CJ5LIVH3.js",
+    "src": "websites/connect.html",
+    "isEntry": true,
+    "imports": [
+      "_global-CauCmdQp.js"
+    ]
+  },
+  "websites/popup.html": {
+    "file": "assets/main-CE8hWJrg.js",
+    "src": "websites/popup.html",
+    "isEntry": true,
+    "imports": [
+      "_global-CauCmdQp.js"
+    ]
+  }
+}

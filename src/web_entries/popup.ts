@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import "./global.css";
+import "../global.css";
 
-import PopupView from "./views/PopupView.vue";
+import PopupView from "../views/PopupView.vue";
 
 const app = createApp(PopupView);
 
