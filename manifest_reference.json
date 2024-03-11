@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "GitLeet",
+    "description": "Syncs your leetcode solutions a Github repository on submit",
+    "version": "1.0",
+    "icons": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "content_scripts": [
+      {
+        "js": ["src/scripts/content-script.ts"],
+        "matches": ["https://leetcode.com/problems/*"]
+      }
+    ],
+    "background": {
+      "service_worker": "src/scripts/background-script.ts",
+      "persistent": false
+    },
+    "action": {
+      "default_title": "Configure Github",
+      "default_popup": "popup.html"
+    },
+    "options_page": "options.html",
+    "permissions": ["storage", "tabs", "activeTab", "downloads"]
+  }
+  
