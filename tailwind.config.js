@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
-  content: ["**/*.{html,js,ts,jsx,tsx,vue}"],
+  content: ["src/**/*.{html,js,ts,jsx,tsx,vue,css}", "web/**/*.{html,js,ts,jsx,tsx,vue,css}"],
   theme: {
     extend: {
       fontFamily: {
@@ -19,6 +19,5 @@ module.exports = {
   plugins: [require("daisyui")],
   daisyui: {
     themes: ["dark"],
-  },
-
+  }
 }

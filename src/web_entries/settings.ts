@@ -2,18 +2,28 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "../global.css";
 
-import PopupView from "../views/PopupView.vue";
+import SettingsView from "../views/SettingsView.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
-  faTowerBroadcast
+  faSquareMinus,
+  faPlus,
+  faArrowUpRightFromSquare,
+  faFloppyDisk,
+  faGear,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
-  faTowerBroadcast
+  faFloppyDisk,
+  faPlus,
+  faSquareMinus,
+  faArrowUpRightFromSquare,
+  faGear,
+  faXmark
 );
 
-const app = createApp(PopupView);
+const app = createApp(SettingsView);
 
 app.use(createPinia());
 app.component("font-awesome-icon", FontAwesomeIcon);
