@@ -17,7 +17,8 @@
     "content_scripts": [
       {
         "js": ["src/scripts/content-script.ts"],
-        "matches": ["https://leetcode.com/problems/*"]
+        "matches": ["https://leetcode.com/problems/*/submissions/*/*"],
+        "run_at": "document_idle"
       }
     ],
     "background": {
@@ -26,9 +27,10 @@
     },
     "action": {
       "default_title": "Configure Github",
-      "default_popup": "web/popup.html"
+      "default_popup": "web/popup.html",
+      "resizable": false
     },
     "options_page": "web/settings.html",
-    "host_permissions": ["https://api.github.com/*", "https://github.com/*"]
+    "host_permissions": ["https://api.github.com/*", "https://github.com/*", "https://leetcode.com/*"]
 }
 

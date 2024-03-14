@@ -1,0 +1,7 @@
+html {
+    touch-action: none;
+    -ms-content-zooming: none;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
