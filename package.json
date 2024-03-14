@@ -1,7 +1,7 @@
 {
-  "name": "gitleet",
+  "name": "LeetSync",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@jridgewell/sourcemap-codec": "^1.4.15",
-    "@octokit/auth-token": "^5.0.1",
     "@octokit/rest": "^20.0.2",
     "@types/chrome": "^0.0.263",
     "@types/turndown": "^5.0.4",

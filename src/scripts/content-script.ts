@@ -3,11 +3,12 @@ import { languageToFileExtension } from './utility';
 import { Octokit } from '@octokit/rest';
 import { Repo } from './composables/useAccessKeyAndRepos';
 
+
 const codeStart = async () => {
     const turndownService = new TurndownService();
     const description_html = await fetchDescriptionHTML()
     const description_markdown = turndownService.turndown(description_html);
-    const extractedCode = document.querySelectorAll('code')[0].textContent
+    const extractedCode = document.querySelectorAll('.flexlayout__tab')[3].querySelector('code')!.textContent
     const code_language = document.querySelectorAll('.text-text-tertiary')[1]!.textContent!.slice(4);
     const code_extension = languageToFileExtension[code_language]
     const submission_number = window.location.href.split('/')[6];
@@ -40,47 +41,65 @@ const codeStart = async () => {
                 .join('_');
 
                 const include_difficulty = ((await chrome.storage.local.get('include_difficulty')).include_difficulty) || 'true'
-                console.log(include_difficulty)
+                const use_separate_files = ((await chrome.storage.local.get('use_separate_files')).use_separate_files) || 'true'
+                console.log("use separate files", ((await chrome.storage.local.get('use_separate_files')).use_separate_files))
+
                 const [owner, repo_name] = repoName.split('/')
                 let folderName = `${questionFrontendId.toString().padStart(4, '0')}_${difficulty.toUpperCase()}_${uppercaseTitleSlug}`
                 if (include_difficulty === 'false') folderName = `${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}`
-                const fileName = `${submission_number}_${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}${code_extension}`
+                let fileName = `${submission_number}_${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}${code_extension}`
+                if (use_separate_files === 'false') fileName = `${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}${code_extension}`
                 const description = `## [${questionFrontendId}. ${uppercaseTitleSlug.replace(/_/g, " ")} - ${difficulty.toUpperCase()}](${window.location.href})\n\n` + description_markdown
                 
                 const readmeExists = await octokit.repos.getContent({
                     owner: owner,
                     repo: repo_name,
                     path: `${folderName}/README.md`
-                }).then(() => true).catch(() => false);
+                }).catch(() => undefined);
 
                 const fileExists = await octokit.repos.getContent({
                     owner: owner,
                     repo: repo_name,
                     path: `${folderName}/${fileName}`
-                }).then(() => true).catch(() => false);
+                }).catch(() => {})
+
+                console.log(fileExists)
+
+                let sha = ""
+                if (fileExists && fileExists.data && ('sha' in fileExists.data))
+                    sha = fileExists.data.sha 
+
+                let folderSha = ""
+                if (readmeExists && readmeExists.data && ('sha' in readmeExists.data))
+                    folderSha = readmeExists.data.sha 
+
                 
                 if (!readmeExists && description) {
                     await octokit.repos.createOrUpdateFileContents({
                         owner: owner,
                         repo: repo_name,
                         path: `${folderName}/README.md`,
-                        message: `Add README.md for submission #${submission_number} - gitLeet`,
+                        message: `Add README.md for submission #${submission_number} - LeetSync`,
                         content: btoa(description),
                         branch: 'main'
                     });
                 }
 
-                if (!fileExists && extractedCode) {
-                    const response = await octokit.repos.createOrUpdateFileContents({
+                if (extractedCode) {
+                    let params = {
                         owner: owner,
                         repo: repo_name,
                         path: `${folderName}/${fileName}`,
-                        message: `Time: ${extractedText[0]} ${extractedText[1]} (${extractedText[3]}), Space: ${extractedText[5]} ${extractedText[6]} (${extractedText[8]}) - gitLeet`,
+                        message: `Time: ${extractedText[0]} ${extractedText[1]} (${extractedText[3]}), Space: ${extractedText[5]} ${extractedText[6]} (${extractedText[8]}) - LeetSync`,
                         content: btoa(extractedCode),
                         branch: 'main'
-                    });
+                    } as any
+
+                    if (sha) params.sha = sha
                     
-                    if (response.status == 201) {
+                    const response = await octokit.repos.createOrUpdateFileContents(params);
+                    
+                    if (response.status < 400 && !folderSha) {
                         const number_easy = Number((await chrome.storage.local.get("number_easy")).number_easy);
                         const number_medium = Number((await chrome.storage.local.get("number_medium")).number_medium);
                         const number_hard = Number((await chrome.storage.local.get("number_hard")).number_hard);
@@ -170,12 +189,23 @@ const fetchTitleHTML = async () => {
 }
 
 
-(function waitForPageLoad() {
+function handleSubmission() {
     const accepted = document.querySelector('[data-e2e-locator="submission-result"]')?.textContent || ''
 
     if (accepted === "Accepted") {
         codeStart();
     } else {
-        setTimeout(waitForPageLoad, 1000);
+        setTimeout(handleSubmission, 1000);
     }
-})();
+}
+
+
+
+chrome.runtime.onMessage.addListener(function(message) {
+    if (message.action === "triggerSyncCode") {
+        // Put your code here to be triggered
+        console.log("Code triggered in content script!");
+        handleSubmission();
+        // For example, you can inject code into the page or perform other actions
+    }
+});

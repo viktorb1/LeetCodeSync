@@ -1,10 +1,17 @@
-chrome.runtime.onMessage.addListener(async (data) => {
-    if (typeof data === 'object' && data.message == "authorized-github") {
-        // const { code } = data.extra_data
-        // const access_token = "testing"
-        // chrome.storage.local.set({access_token: access_token})
-        console.log("hello")
-    }
-});
+chrome.webRequest.onCompleted.addListener(
+    function(details) {
+        console.log("this is running like it should")
+        console.log(details)
+        let count = 0;
 
-export {};
+        chrome.webRequest.onCompleted.addListener(() => {
+            count += 1
+            if (count == 4)
+                setTimeout(() => chrome.tabs.sendMessage(details.tabId, {action: "triggerSyncCode"}), 300)
+                
+        },
+        {urls: ["https://leetcode.com/graphql/"]}
+        )
+      },
+      {urls: ["https://leetcode.com/problems/*/submit/"]},
+      );

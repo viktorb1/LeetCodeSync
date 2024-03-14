@@ -1,16 +1,4 @@
 <script setup lang="ts">
-// import { generateRandomState } from "../scripts/utility.ts"
-// chrome.tabs.query({ active: true, currentWindow: true }, ([res]) => {
-//   console.log("this is failing with", res.url)
-//   // if (res && res.url.startsWith(import.meta.env.VITE_URL_PATH)) {
-//     if (res && res.id) {
-//       console.log("sending");
-//       chrome.tabs.sendMessage(res.id, "clicked-action-button");
-//     }
-//   // }
-// });
-// import { connectionFailed } from '../scripts/utility';
-
 import { onMounted, ref, watch } from 'vue';
 import { useAccessKeyAndRepos } from '../scripts/composables/useAccessKeyAndRepos';
 import { connectionFailed } from '../scripts/utility';
@@ -58,26 +46,26 @@ onMounted(async () => {
   <main class="pb-8">
     <div class="flex flex-col items-center justify-center text-lg rounded-xl">
       <div class="flex justify-center w-full p-2 rounded-b-lg bg-leetcode-green">
-        <img src="@/assets/icon.svg" class="w-10 select-none" />
-        <h1 class="font-[800] text-3xl text-[white] select-none">GITLEET</h1>
+        <img src="@/assets/icon.svg" class="w-10 select-none " draggable="false" />
+        <h1 class="font-bold text-3xl text-[white] select-none">LeetSync</h1>
       </div>
       <div class="flex flex-row justify-around w-full p-4">
         <div class="text-center">
-          <p class="text-leetcode-green">Easy</p>
-          <p class="text-3xl font-bold text-leetcode-green">{{number_easy}}</p>
+          <p class="select-none text-leetcode-green">Easy</p>
+          <p class="text-3xl font-bold select-none text-leetcode-green">{{number_easy}}</p>
         </div>
         <div class="text-center">
-          <p class="text-leetcode-orange">Medium</p>
-          <p class="text-3xl font-bold text-leetcode-orange">{{ number_medium }}</p>
+          <p class="select-none text-leetcode-orange">Medium</p>
+          <p class="text-3xl font-bold select-none text-leetcode-orange">{{ number_medium }}</p>
         </div>
         <div class="text-center">
-          <p class="text-leetcode-red">Hard</p>
-          <p class="text-3xl font-bold text-leetcode-red">{{  number_hard }}</p>
+          <p class="select-none text-leetcode-red">Hard</p>
+          <p class="text-3xl font-bold select-none text-leetcode-red">{{  number_hard }}</p>
         </div>
       </div>
       <div class="mb-6">
-      <div class="flex flex-col w-full min-w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries()">
-        <div class="flex flex-col justify-center min-w-full p-2 mx-2 card bg-base-300 rounded-box">
+      <div class="flex flex-col w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries()">
+        <div class="flex flex-col justify-center p-2 mx-2 card bg-base-300 rounded-box">
           <div class="flex items-center justify-between px-2">
             <p class="font-bold break-all">{{ repoObj.numberSynced }}</p>
             <p class="m-2 break-all">{{ repoObj.repoName }}</p>
@@ -103,4 +91,3 @@ onMounted(async () => {
     </div>
   </main>
 </template>
-

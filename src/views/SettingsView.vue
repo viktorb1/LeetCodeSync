@@ -1,6 +1,6 @@
 `
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { Repo, useAccessKeyAndRepos } from '../scripts/composables/useAccessKeyAndRepos';
 import { connectionFailed } from '../scripts/utility';
 
@@ -10,6 +10,8 @@ const showTooltip = ref(false)
 const token_invalid = ref(false)
 const any_invalid = computed(() => invalid.value.some(value => value === true) || token_invalid.value)
 const my_modal = ref()
+const include_difficulty_toggle = ref()
+const use_separate_files_toggle = ref()
 const { access_token, repos, startingValues } = useAccessKeyAndRepos()
 
 
@@ -28,6 +30,14 @@ const saveToLocalStorage = async () => {
     "number_easy": 0,
     "number_medium": 0,
     "number_hard": 0
+  })
+
+  await chrome.storage.local.set({
+    "use_separate_files": include_difficulty_toggle.value.checked
+  })
+
+  await chrome.storage.local.set({
+    "to": use_separate_files_toggle.value.checked
   })
 
   startingValues.value = {
@@ -85,12 +95,27 @@ watch(repos, () => {
   }
 })
 
+onMounted(async () => {
+  const set_to_false = ((await chrome.storage.local.get('include_difficulty')).include_difficulty) === 'false';
+  include_difficulty_toggle.value.checked = (set_to_false) ? false : true
+  const set_to_false2 = ((await chrome.storage.local.get('use_separate_files')).use_separate_files) === 'false';
+  use_separate_files_toggle.value.checked = (set_to_false2) ? false : true
+})
+
 
 const updateIncludeDifficulty = async () => {
   const include_difficulty: string = ((await chrome.storage.local.get('include_difficulty')).include_difficulty) || 'true'
   console.log(include_difficulty)
   await chrome.storage.local.set({
     include_difficulty: (include_difficulty == 'true') ? 'false' : 'true'
+  })
+}
+
+const updateUseSeparateFiles = async () => {
+  const use_separate_files: string = ((await chrome.storage.local.get('use_separate_files')).use_separate_files) || 'true'
+  console.log(use_separate_files)
+  await chrome.storage.local.set({
+    use_separate_files: (use_separate_files == 'true') ? 'false' : 'true'
   })
 }
 
@@ -101,7 +126,7 @@ const updateIncludeDifficulty = async () => {
   <div class="p-8 md:p-20 !text-base">
     <div class="flex justify-center w-full p-2 py-4 mb-6 rounded-lg bg-leetcode-green">
       <img src="@/assets/icon.svg" class="w-10 select-none" />
-      <h1 class="font-[800] text-3xl text-[white] select-none">GITLEET</h1>
+      <h1 class="font-bold text-3xl text-[white] select-none">LeetSync</h1>
     </div>
 
     <div class="hidden p-2" :class="{ 'block': !startingValues.access_token || !startingValues.repos.length }">
@@ -150,10 +175,10 @@ const updateIncludeDifficulty = async () => {
           </div>
         </div>
 
-        <input type="text" placeholder="repo e.g. username/myrepo" class="mb-4 input input-bordered"
+        <input type="text" placeholder="repo e.g. username/myrepo" class="z-10 mb-4 input input-bordered"
           :class="{ 'w-96': index === 0, 'w-80 mr-4': index !== 0, 'input-error': invalid[index] }"
           :value="repoObj.repoName" @input="repos[index].repoName = ($event.target as HTMLInputElement).value" />
-        <div class="tooltip" data-tip="remove repo" v-if="index > 0">
+        <div class="z-20 tooltip" data-tip="remove repo" v-if="index > 0">
 
           <button class="border-none btn btn-accent bg-leetcode-red hover:bg-leetcode-red"
             @click="repos.splice(index, 1); invalid.splice(index, 1); saveToLocalStorage()">
@@ -164,7 +189,7 @@ const updateIncludeDifficulty = async () => {
 
       </div>
 
-      <div class="tooltip" data-tip="add another repo">
+      <div class="z-20 tooltip" data-tip="add another repo">
 
         <button
           class="rounded-md h-8 !min-h-8 mb-4 border-none w-96 btn btn-accent bg-leetcode-green hover:bg-leetcode-green"
@@ -173,7 +198,7 @@ const updateIncludeDifficulty = async () => {
         </button>
       </div>
 
-      <div :class="{ 'tooltip tooltip-bottom tooltip-open': showTooltip }" class="mb-12"
+      <div :class="{ 'tooltip tooltip-bottom tooltip-open': showTooltip }" class="mb-4"
         :data-tip="(any_invalid) ? 'settings not saved, invalid repo or access key' : 'settings saved!'">
         <button class="btn btn-info w-96" @click="validateAndSaveData">
           <font-awesome-icon :icon="['fas', 'floppy-disk']" />
@@ -181,6 +206,20 @@ const updateIncludeDifficulty = async () => {
         </button>
       </div>
 
+      <div class="form-control">
+        <label class="cursor-pointer label">
+          <span class="mr-4 label-text">Include Difficulty in Github Folder Name</span>
+          <input type="checkbox" class="toggle" checked @input="updateIncludeDifficulty" ref="include_difficulty_toggle" />
+        </label>
+      </div>
+
+      <div class="mb-8 form-control">
+        <label class="cursor-pointer label">
+          <span class="mr-4 label-text">Create separate files for each submission</span>
+          <input type="checkbox" class="toggle" checked @input="updateUseSeparateFiles" ref="use_separate_files_toggle" />
+        </label>
+      </div>
+      
       <button class="btn" @click="my_modal.showModal()">Steps for Generating Access Token</button>
       <dialog class="modal" ref="my_modal">
         <div class="modal-box">
@@ -189,7 +228,7 @@ const updateIncludeDifficulty = async () => {
             <p class="mb-4"><b class="text-leetcode-green">Step 1:</b> Visit <a class="italic"
                 href="https://github.com/settings/tokens/new" target="_blank">https://github.com/settings/tokens/new</a>
             </p>
-            <p class="mb-3"><b class="text-leetcode-orange">Step 2:</b> Enter <b>gitLeet</b> for the note, <b>No
+            <p class="mb-3"><b class="text-leetcode-orange">Step 2:</b> Enter <b>LeetSync</b> for the note, <b>No
                 expiration</b>
               for the Expiration date and check <b>repo</b> under the <b>Select scopes</b> section</p>
             <p><b class="text-leetcode-red">Step 3:</b> Press <b>Generate token</b>, copy the access token which starts
@@ -205,13 +244,6 @@ const updateIncludeDifficulty = async () => {
         </form>
       </dialog>
 
-      <div class="mt-8 form-control">
-        <label class="cursor-pointer label">
-          <span class="mr-4 label-text">Include Difficulty in Github Folder Name</span>
-          <input type="checkbox" class="toggle" checked @input="updateIncludeDifficulty" />
-        </label>
-      </div>
     </div>
   </div>
 </template>
-`
