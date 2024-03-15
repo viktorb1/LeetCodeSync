@@ -19,7 +19,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: currentModuleDirectory + '/web/popup.html',
-        connect: currentModuleDirectory + '/web/connect.html',
+        settings: currentModuleDirectory + '/web/settings.html',
       }
     }
   },
