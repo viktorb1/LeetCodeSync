@@ -46,7 +46,7 @@ onMounted(async () => {
   <main class="pb-8">
     <div class="flex flex-col items-center justify-center text-lg rounded-xl">
       <div class="flex justify-center w-full p-2 rounded-b-lg bg-leetcode-green">
-        <h1 class="font-bold text-3xl text-[white] select-none">LeetcodeSync</h1>
+        <h1 class="font-bold text-3xl text-[white] select-none">LeetCodeSync</h1>
       </div>
       <div class="flex flex-row justify-around w-full p-4">
         <div class="text-center">

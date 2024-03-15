@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "LeetcodeSync - Sync your Leetcode solutions to Github",
+    "name": "LeetCodeSync - Sync your Leetcode solutions to Github",
     "description": "Automatically sync your Leetcode solutions to a Github repository when you press submit",
     "version": "1.0",
     "icons": {
