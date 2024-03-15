@@ -1,4 +1,4 @@
-# LeetSync - Sync your Leetcode solutions to Github
+# <img src="https://raw.githubusercontent.com/viktorb1/LeetSync/main/src/assets/icon_color.svg" width="40"> LeetSync - Sync your Leetcode solutions to Github
 
 **LeetSync** is a lightweight chrome extension that lets you automatically sync your LeetCode solutions to Github. It is easy to use, and it works on the modern updated LeetCode UI. Unlike other Leetcode syncing solutions, **LeetSync** uses a user-generated access token to access to your Github account (much more secure than exposing a secret).
 
