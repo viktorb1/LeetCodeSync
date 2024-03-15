@@ -1,6 +1,6 @@
-# <img src="https://raw.githubusercontent.com/viktorb1/LeetSync/main/src/assets/icon_color.svg" width="40"> LeetSync - Sync your Leetcode solutions to Github
+# <img src="https://raw.githubusercontent.com/viktorb1/LeetcodeSync/main/src/assets/icon_color.svg" width="40"> LeetcodeSync - Sync your Leetcode solutions to Github
 
-**LeetSync** is a lightweight chrome extension that lets you automatically sync your LeetCode solutions to Github. It is easy to use, and it works on the modern updated LeetCode UI. Unlike other Leetcode syncing solutions, **LeetSync** uses a user-generated access token to access to your Github account (much more secure than exposing a secret).
+**LeetcodeSync** is a lightweight chrome extension that lets you automatically sync your LeetCode solutions to Github. It is easy to use, and it works on the modern updated LeetCode UI. Unlike other Leetcode syncing solutions, **LeetcodeSync** uses a user-generated access token to access to your Github account (much more secure than exposing a secret).
 
 ## Options
 
@@ -15,7 +15,7 @@ This project is written in TypeScript and uses Vue.js for the frontend work. It 
 
 To manually compile the chrome extension and install it in your browser,
 
-1. `cd` into the folder containing the LeetSync repository
+1. `cd` into the folder containing the LeetcodeSync repository
 2. Type `npm run build`
 3. Go to *chrome://extensions* on your browser and enable *Developer Mode*.  
 4. Select "Load Unpacked" and select the `dist/` folder to install

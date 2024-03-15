@@ -79,7 +79,7 @@ const codeStart = async () => {
                         owner: owner,
                         repo: repo_name,
                         path: `${folderName}/README.md`,
-                        message: `Add README.md for submission #${submission_number} - LeetSync`,
+                        message: `Add README.md for submission #${submission_number} - LeetcodeSync`,
                         content: btoa(description),
                         branch: 'main'
                     });
@@ -90,7 +90,7 @@ const codeStart = async () => {
                         owner: owner,
                         repo: repo_name,
                         path: `${folderName}/${fileName}`,
-                        message: `Time: ${extractedText[0]} ${extractedText[1]} (${extractedText[3]}), Space: ${extractedText[5]} ${extractedText[6]} (${extractedText[8]}) - LeetSync`,
+                        message: `Time: ${extractedText[0]} ${extractedText[1]} (${extractedText[3]}), Space: ${extractedText[5]} ${extractedText[6]} (${extractedText[8]}) - LeetcodeSync`,
                         content: btoa(extractedCode),
                         branch: 'main'
                     } as any

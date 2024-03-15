@@ -228,7 +228,7 @@ const updateUseSeparateFiles = async () => {
             <p class="mb-4"><b class="text-leetcode-green">Step 1:</b> Visit <a class="italic"
                 href="https://github.com/settings/tokens/new" target="_blank">https://github.com/settings/tokens/new</a>
             </p>
-            <p class="mb-3"><b class="text-leetcode-orange">Step 2:</b> Enter <b>LeetSync</b> for the note, <b>No
+            <p class="mb-3"><b class="text-leetcode-orange">Step 2:</b> Enter <b>LeetcodeSync</b> for the note, <b>No
                 expiration</b>
               for the Expiration date and check <b>repo</b> under the <b>Select scopes</b> section</p>
             <p><b class="text-leetcode-red">Step 3:</b> Press <b>Generate token</b>, copy the access token which starts
