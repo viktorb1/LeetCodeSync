@@ -46,7 +46,6 @@ onMounted(async () => {
   <main class="pb-8">
     <div class="flex flex-col items-center justify-center text-lg rounded-xl">
       <div class="flex justify-center w-full p-2 rounded-b-lg bg-leetcode-green">
-        <img src="@/assets/icon.svg" class="w-10 select-none " draggable="false" />
         <h1 class="font-bold text-3xl text-[white] select-none">LeetSync</h1>
       </div>
       <div class="flex flex-row justify-around w-full p-4">
@@ -85,7 +84,7 @@ onMounted(async () => {
       </div>
       <a href="settings.html" target="_blank">
         <button class="btn btn-info">
-          Link your repositories
+          Link your repository
         </button>
       </a>
     </div>

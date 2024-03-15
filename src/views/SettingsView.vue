@@ -124,9 +124,9 @@ const updateUseSeparateFiles = async () => {
 
 <template>
   <div class="p-8 md:p-20 !text-base">
-    <div class="flex justify-center w-full p-2 py-4 mb-6 rounded-lg bg-leetcode-green">
-      <img src="@/assets/icon.svg" class="w-10 select-none" />
-      <h1 class="font-bold text-3xl text-[white] select-none">LeetSync</h1>
+    <div class="flex justify-center">
+      <img src="@/assets/icon_color.svg" class="w-16 select-none" />
+
     </div>
 
     <div class="hidden p-2" :class="{ 'block': !startingValues.access_token || !startingValues.repos.length }">
@@ -143,7 +143,7 @@ const updateUseSeparateFiles = async () => {
 
     <div class="flex flex-col items-center justify-center mb-12">
       <h1 class="mt-8 mb-4 text-4xl font-bold">
-        Configure settings
+        Configure Settings
       </h1>
 
       <div class="flex items-center justify-center">
