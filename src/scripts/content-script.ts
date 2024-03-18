@@ -9,18 +9,19 @@ const codeStart = async () => {
     const description_html = await fetchDescriptionHTML()
     const description_markdown = turndownService.turndown(description_html);
     const extractedCode = document.querySelectorAll('.flexlayout__tab')[3].querySelector('code')!.textContent
-    const code_language = document.querySelectorAll('.text-text-tertiary')[1]!.textContent!.slice(4);
-    const code_extension = languageToFileExtension[code_language]
+
     const submission_number = window.location.href.split('/')[6];
 
     const {questionFrontendId, title, titleSlug, difficulty} = await fetchTitleHTML();
     console.log(questionFrontendId, title, titleSlug, difficulty)
-    console.log(description_markdown, extractedCode, code_language, code_extension)
+    console.log(description_markdown, extractedCode)
 
     const extractedText: string[] = []
     const spans = document.querySelectorAll(".rounded-sd span") as NodeListOf<HTMLSpanElement>
     spans.forEach(span => extractedText.push(span.textContent as string))
     console.log(extractedText)
+    const code_language = extractedText[4].split(' ').pop() as string
+    const code_extension = languageToFileExtension[code_language]
 
     const access_token: string = (await chrome.storage.local.get("access_token")).access_token || "";    
     const repos = JSON.parse((await chrome.storage.local.get("repos")).repos) as Repo[]
@@ -193,7 +194,7 @@ function handleSubmission() {
     const accepted = document.querySelector('[data-e2e-locator="submission-result"]')?.textContent || ''
 
     if (accepted === "Accepted") {
-        codeStart();
+        setTimeout(codeStart, 300)
     } else {
         setTimeout(handleSubmission, 1000);
     }

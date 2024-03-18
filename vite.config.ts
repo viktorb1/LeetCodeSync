@@ -23,7 +23,7 @@ export default defineConfig({
       }
     }
   },
-  esbuild: { // remove comments on build
-    drop: ['console', 'debugger'],
-  },
+  // esbuild: { // remove comments on build
+  //   drop: ['console', 'debugger'],
+  // },
 });
