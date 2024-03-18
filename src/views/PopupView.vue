@@ -13,9 +13,9 @@ let connection_status = ref<number[]>([])
 
 
 const CONNECTION_STATUS = {
-	FAIL: 0,
-	UNKNOWN: 1,
-	SUCCESS: 2,
+  FAIL: 0,
+  UNKNOWN: 1,
+  SUCCESS: 2,
 }
 
 watch(repos, () => {
@@ -40,6 +40,10 @@ onMounted(async () => {
   number_hard.value = Number((await chrome.storage.local.get("number_hard")).number_hard) || 0;
 })
 
+const openLinkInNewTab = (repoName: string) => {
+  chrome.tabs.create({ url: `https://github.com/${repoName}` })
+}
+
 </script>
 
 <template>
@@ -51,7 +55,7 @@ onMounted(async () => {
       <div class="flex flex-row justify-around w-full p-4">
         <div class="text-center">
           <p class="select-none text-leetcode-green">Easy</p>
-          <p class="text-3xl font-bold select-none text-leetcode-green">{{number_easy}}</p>
+          <p class="text-3xl font-bold select-none text-leetcode-green">{{ number_easy }}</p>
         </div>
         <div class="text-center">
           <p class="select-none text-leetcode-orange">Medium</p>
@@ -59,28 +63,27 @@ onMounted(async () => {
         </div>
         <div class="text-center">
           <p class="select-none text-leetcode-red">Hard</p>
-          <p class="text-3xl font-bold select-none text-leetcode-red">{{  number_hard }}</p>
+          <p class="text-3xl font-bold select-none text-leetcode-red">{{ number_hard }}</p>
         </div>
       </div>
       <div class="mb-6">
-      <div class="flex flex-col w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries()">
-        <div class="flex flex-col justify-center p-2 mx-2 card bg-base-300 rounded-box">
-          <div class="flex items-center justify-between px-2">
-            <p class="font-bold break-all">{{ repoObj.numberSynced }}</p>
-            <p class="m-2 break-all">{{ repoObj.repoName }}</p>
-            <div class="tooltip" data-tip="test connection">
-            <button
-              class="border-none rounded-xl btn btn-square btn-neutral" 
-              :class="{'bg-leetcode-red hover:bg-leetcode-red text-[black]': connection_status[index] === 0,
-               'bg-leetcode-green hover:bg-leetcode-green text-[black]': connection_status[index] === 2,}"
-              
-              @click="checkConnection(index)">
-              <font-awesome-icon :icon="['fas', 'tower-broadcast']" class="text-lg" />
-            </button>
+        <div class="flex flex-col w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries()         ">
+          <div class="flex flex-col justify-center p-2 mx-2 card bg-base-300 rounded-box">
+            <div class="flex items-center justify-between px-2">
+              <p class="font-bold break-all">{{ repoObj.numberSynced }}</p>
+              <a class="m-2 break-all cursor-pointer" @click="openLinkInNewTab(repoObj.repoName)" target="_blank">{{
+            repoObj.repoName }}</a>
+              <div class="tooltip" data-tip="test connection">
+                <button class="border-none rounded-xl btn btn-square btn-neutral" :class="{
+            'bg-leetcode-red hover:bg-leetcode-red text-[black]': connection_status[index] === 0,
+            'bg-leetcode-green hover:bg-leetcode-green text-[black]': connection_status[index] === 2,
+          }" @click="checkConnection(index)">
+                  <font-awesome-icon :icon="['fas', 'tower-broadcast']" class="text-lg" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <a href="settings.html" target="_blank">
         <button class="btn btn-info">
