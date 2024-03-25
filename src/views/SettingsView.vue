@@ -165,13 +165,13 @@ const updateUseSeparateFiles = async () => {
 
             <button class="relative border-none btn btn-neutral join-item"
               :class="{ 'bg-leetcode-green hover:bg-leetcode-green text-[black]': repoObj.syncEasy }"
-              @click="repoObj.syncEasy = !repoObj.syncEasy; saveToLocalStorage()">E</button>
+              @click="repoObj.syncEasy = !repoObj.syncEasy">E</button>
             <button class="relative border-none btn btn-neutral join-item"
               :class="{ 'bg-leetcode-orange hover:bg-leetcode-orange text-[black]': repoObj.syncMedium }"
-              @click="repoObj.syncMedium = !repoObj.syncMedium; saveToLocalStorage()">M</button>
+              @click="repoObj.syncMedium = !repoObj.syncMedium">M</button>
             <button class="relative border-none btn btn-neutral join-item"
               :class="{ 'bg-leetcode-red hover:bg-leetcode-red text-[black]': repoObj.syncHard }"
-              @click="repoObj.syncHard = !repoObj.syncHard; saveToLocalStorage()">H</button>
+              @click="repoObj.syncHard = !repoObj.syncHard">H</button>
           </div>
         </div>
 
@@ -181,7 +181,7 @@ const updateUseSeparateFiles = async () => {
         <div class="z-20 tooltip" data-tip="remove repo" v-if="index > 0">
 
           <button class="border-none btn btn-accent bg-leetcode-red hover:bg-leetcode-red"
-            @click="repos.splice(index, 1); invalid.splice(index, 1); saveToLocalStorage()">
+            @click="repos.splice(index, 1); invalid.splice(index, 1)">
             <font-awesome-icon :icon="['fas', 'xmark']" class="text-xl" />
           </button>
         </div>
@@ -209,17 +209,19 @@ const updateUseSeparateFiles = async () => {
       <div class="form-control">
         <label class="cursor-pointer label">
           <span class="mr-4 label-text">Include Difficulty in Github Folder Name</span>
-          <input type="checkbox" class="toggle" checked @input="updateIncludeDifficulty" ref="include_difficulty_toggle" />
+          <input type="checkbox" class="toggle" checked @input="updateIncludeDifficulty"
+            ref="include_difficulty_toggle" />
         </label>
       </div>
 
       <div class="mb-8 form-control">
         <label class="cursor-pointer label">
           <span class="mr-4 label-text">Create separate files for each submission</span>
-          <input type="checkbox" class="toggle" checked @input="updateUseSeparateFiles" ref="use_separate_files_toggle" />
+          <input type="checkbox" class="toggle" checked @input="updateUseSeparateFiles"
+            ref="use_separate_files_toggle" />
         </label>
       </div>
-      
+
       <button class="btn" @click="my_modal.showModal()">Steps for Generating Access Token</button>
       <dialog class="modal" ref="my_modal">
         <div class="modal-box">

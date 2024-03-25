@@ -3,9 +3,9 @@ import { onMounted, ref, watch } from 'vue';
 import { useAccessKeyAndRepos } from '../scripts/composables/useAccessKeyAndRepos';
 import { connectionFailed } from '../scripts/utility';
 
-const number_easy = ref(0);
-const number_medium = ref(0);
-const number_hard = ref(0)
+const number_easy = ref<number | null>(null);
+const number_medium = ref<number | null>(null);
+const number_hard = ref<number | null>(null)
 
 const { access_token, repos } = useAccessKeyAndRepos()
 let connection_status = ref<number[]>([])
@@ -67,7 +67,7 @@ const openLinkInNewTab = (repoName: string) => {
         </div>
       </div>
       <div class="mb-6">
-        <div class="flex flex-col w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries()         ">
+        <div class="flex flex-col w-full mb-2 border-opacity-50" v-for="[index, repoObj] of repos.entries() ">
           <div class="flex flex-col justify-center p-2 mx-2 card bg-base-300 rounded-box">
             <div class="flex items-center justify-between px-2">
               <p class="font-bold break-all">{{ repoObj.numberSynced }}</p>

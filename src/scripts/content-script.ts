@@ -14,7 +14,7 @@ const codeStart = async () => {
 
     const {questionFrontendId, title, titleSlug, difficulty} = await fetchTitleHTML();
     console.log(questionFrontendId, title, titleSlug, difficulty)
-    console.log(description_markdown, extractedCode)
+    console.log(extractedCode)
 
     const extractedText: string[] = []
     const spans = document.querySelectorAll(".rounded-sd span") as NodeListOf<HTMLSpanElement>
@@ -50,7 +50,7 @@ const codeStart = async () => {
                 if (include_difficulty === 'false') folderName = `${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}`
                 let fileName = `${submission_number}_${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}${code_extension}`
                 if (use_separate_files === 'false') fileName = `${questionFrontendId.toString().padStart(4, '0')}_${uppercaseTitleSlug}${code_extension}`
-                const description = `## [${questionFrontendId}. ${uppercaseTitleSlug.replace(/_/g, " ")} - ${difficulty.toUpperCase()}](${window.location.href})\n\n` + description_markdown
+                let description = `## [${questionFrontendId}. ${uppercaseTitleSlug.replace(/_/g, " ")} - ${difficulty.toUpperCase()}](${encodeURI(window.location.href)})\n\n` + description_markdown
                 
                 const readmeExists = await octokit.repos.getContent({
                     owner: owner,
@@ -74,7 +74,10 @@ const codeStart = async () => {
                 if (readmeExists && readmeExists.data && ('sha' in readmeExists.data))
                     folderSha = readmeExists.data.sha 
 
-                
+                const latin1Regex = /[^\x00-\xFF]/g;
+                description = description.replace(latin1Regex, '')
+                console.log("stripped: \n", description)
+
                 if (!readmeExists && description) {
                     await octokit.repos.createOrUpdateFileContents({
                         owner: owner,
