@@ -1,7 +1,7 @@
 `
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import { Repo, useAccessKeyAndRepos } from '../scripts/composables/useAccessKeyAndRepos';
+import { useAccessKeyAndRepos } from '../scripts/composables/useAccessKeyAndRepos';
 import { connectionFailed } from '../scripts/utility';
 
 
@@ -16,14 +16,10 @@ const { access_token, repos, startingValues } = useAccessKeyAndRepos()
 
 
 const saveToLocalStorage = async () => {
-  const resetRepos: Repo[] = repos.value.map(repo => ({
-    ...repo,
-    numberSynced: 0
-  }));
 
   await chrome.storage.local.set({
     "access_token": access_token.value,
-    "repos": JSON.stringify(resetRepos)
+    "repos": JSON.stringify(repos)
   })
 
   await chrome.storage.local.set({
